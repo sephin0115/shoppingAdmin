@@ -49,6 +49,7 @@ public class dbTest {
 			
 			//select Äõ¸® ¿¹Á¦
 			Qrs = dbConn.excuteQuery("SELECT * FROM ITB_JAVA_TEST");
+			
 			dt2.SetDataTable(Qrs);
 			
 			for(int iRow = 0 ; iRow < dt2.rowCount ; iRow++)
@@ -58,6 +59,28 @@ public class dbTest {
 					System.out.println(dt2.DataTable[iRow][iCol]);
 				}
 			}
+			StringBuilder str = new StringBuilder();
+			/*
+			 * str.append("CREATE PROC P_CU_USER_INSERT_I\n"); str.
+			 * append("( @P_CD_COMPANY NVARCHAR(10) , @P_ID_USER NVARCHAR(30) , @P_PW NVARCHAR(20)) AS \n"
+			 * ); str.
+			 * append("INSERT INTO ITB_JAVA_TEST (CD_COMPANY , ID_USER , PW) VALUES (@P_CD_COMPANY , @P_ID_USER , @P_PW) \n"
+			 * );
+			 */
+			//P_CU_USER_INSERT_I
+			Object[][] insertParam = new Object[2][3];
+			for(int i = 0; i <2 ; i ++)
+			{
+				insertParam[i][0] = "1000";
+				insertParam[i][1] = "20190502" + i;
+				insertParam[i][2] = "1";				
+			}
+			
+			//dbConn.excuteNonquery("exec P_CU_USER_INSERT_I '1000' , '2019505050' , '1'");
+			System.out.println(str);
+			//boolean b = dbConn.excuteNonquery(str.toString());
+			boolean b = dbConn.excuteSave("P_CU_USER_INSERT_I", insertParam);
+			System.out.println(b);
 			
 			//b_save = dbConn.excuteSave("", obj);
 			

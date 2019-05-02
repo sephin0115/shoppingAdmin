@@ -89,33 +89,72 @@ public class connectDb {
 		return rs;		
 	}
 	
-	public boolean excuteSave(String strProc , Object[] obj)
+	public boolean excuteSave(String strProc , Object[][] obj)
 	{
 		String str = "";
 		boolean b_save = false;
 		str = "{call " +newDB.getStrDBName() +"."+strProc+"(";
 		try {
 			// 동적으로 매개변수 선언! obj배열의 수만큼!
-			for (int i = 0 ; i < obj.length ; i++)
-			{
+			Object[] row = null;
+			
+			// 첫행만 보고 str을 만들어 주면된다.
+			row = obj[0];
+			for (int colIdx = 0 ; colIdx < row.length ; colIdx++)
+			{					
 				str = str + "?,";
-			}
+			}		
+			
 			str = str.substring(0, str.length() - 1);
 			str = str + ")}";
-			ctmt = con.prepareCall(str);		
+			//ctmt = con.prepareCall(str,ResultSet.TYPE_SCROLL_INSENSITIVE , ResultSet.CONCUR_READ_ONLY);
+			ctmt = con.prepareCall(str);
+			
+			
 			// 매개변수 매핑
-			for (int i = 0 ; i < obj.length ; i++)
+			// 2차원 배열이라 좀 힘든데 이걸 어찌해야되나...
+			
+			
+			for(int rowIdx = 0 ; rowIdx < obj.length ; rowIdx++)
 			{
-				ctmt.setObject(i + 1, obj[i]);			
+				row = obj[rowIdx];
+				for(int colIdx = 0; colIdx < row.length ; colIdx ++)
+				{
+					System.out.println(obj[rowIdx][colIdx]);
+					System.out.println(row[colIdx]);
+					System.out.println(rowIdx + 1);
+					ctmt.setObject(colIdx + 1, row[colIdx]);					
+				}
+				System.out.println(str);
+				b_save = ctmt.execute();
+				
+				System.out.println("db result : "+b_save);
+
 			}
+			
+			
 			System.out.println(str);
-			b_save = ctmt.execute();
+			//b_save = ctmt.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			b_save = false;
 			e.printStackTrace();
 		}
 		return b_save;
+	}
+	
+	public boolean excuteNonquery(String strQuery)
+	{
+		boolean bSuccess = false;
+		
+		try {
+			stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE , ResultSet.CONCUR_READ_ONLY);
+			bSuccess = stmt.execute(strQuery);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return bSuccess;
 	}
 	
 	public void close() throws SQLException
