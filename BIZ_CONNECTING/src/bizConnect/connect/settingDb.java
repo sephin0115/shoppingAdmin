@@ -1,4 +1,4 @@
-package Connect;
+package bizConnect.connect;
 
 public class settingDb {
 	private String strServerIP;

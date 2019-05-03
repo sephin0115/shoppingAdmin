@@ -1,4 +1,4 @@
-package Connect;
+package bizConnect.connect;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -140,7 +140,7 @@ public class connectDb {
 			b_save = false;
 			e.printStackTrace();
 		}
-		return b_save;
+		return true;
 	}
 	
 	public boolean excuteNonquery(String strQuery)

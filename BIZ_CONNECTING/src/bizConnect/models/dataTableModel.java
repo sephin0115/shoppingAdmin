@@ -1,4 +1,4 @@
-package Model;
+package bizConnect.models;
 
 import javax.swing.table.AbstractTableModel;
 

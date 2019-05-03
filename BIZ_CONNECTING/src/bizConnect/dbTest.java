@@ -1,10 +1,11 @@
-package javaTest;
+package bizConnect;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import Connect.*;
-import DataType.*;
+
+import bizConnect.connect.connectDb;
+import bizConnect.dataType.dataTable;
 
 public class dbTest {
 

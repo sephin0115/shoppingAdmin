@@ -1,9 +1,9 @@
-package DataType;
+package bizConnect.dataType;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
-import Model.*;
+import bizConnect.models.dataTableModel;
 
 @SuppressWarnings("serial")
 public class dataTable extends dataTableModel {
